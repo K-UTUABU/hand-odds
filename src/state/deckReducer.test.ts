@@ -89,3 +89,18 @@ test('前の状態を書き換えない', () => {
   for (const a of actions) deckReducer(s, a)
   expect(s).toEqual(frozen)
 })
+test('removeGroup: 複数のパターンから、そのグループの条件だけが消える', () => {
+  let s = deckReducer(initialState, { type: 'addGroup' })
+  s = deckReducer(s, { type: 'addPattern' })
+  const [g1, g2] = s.groups
+  for (const p of s.patterns) {
+    s = deckReducer(s, { type: 'setCondition', patternId: p.id, groupId: g1.id, condition: { min: 1, max: null } })
+    s = deckReducer(s, { type: 'setCondition', patternId: p.id, groupId: g2.id, condition: { min: 2, max: 3 } })
+  }
+  s = deckReducer(s, { type: 'removeGroup', id: g1.id })
+  expect(s.patterns).toHaveLength(2)
+  for (const p of s.patterns) {
+    expect(p.conditions).not.toHaveProperty(g1.id)
+    expect(p.conditions[g2.id]).toEqual({ min: 2, max: 3 })
+  }
+})

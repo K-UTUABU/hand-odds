@@ -1,4 +1,5 @@
-import type { InputError } from '@/calc/types'
+import type { DeckInput, InputError } from '@/calc/types'
+import type { Action } from '@/state/deckReducer'
 
 /** NaN（空欄）は空文字で表示する */
 const toText = (v: number | null) => (v === null || Number.isNaN(v) ? '' : v)
@@ -9,16 +10,17 @@ type NumberInputProps = {
   onChange: (v: number) => void
   errors: InputError[]
   field: string
+  className?: string
 }
 
 /** 数値の入力欄。空欄は NaN として渡す */
-export function NumberInput({ label, value, onChange, errors, field }: NumberInputProps) {
+export function NumberInput({ label, value, onChange, errors, field, className = 'w-16' }: NumberInputProps) {
   return (
     <input
       type="number" inputMode="numeric" aria-label={label} aria-invalid={errors.some(e => e.field === field)}
       value={toText(value)}
       onChange={e => onChange(e.target.value === '' ? NaN : Number(e.target.value))}
-      className="w-16 rounded border border-gray-400 px-1 py-0.5 aria-invalid:border-red-600"
+      className={`${className} rounded border border-gray-400 px-1 py-0.5 aria-invalid:border-red-600`}
     />
   )
 }
@@ -30,3 +32,4 @@ export function FieldErrors({ errors, field }: { errors: InputError[]; field: st
   ))
 }
 
+export type SectionProps = { state: DeckInput; errors: InputError[]; dispatch: React.Dispatch<Action> }

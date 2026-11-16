@@ -1,11 +1,8 @@
 import { LIMITS } from '@/calc/types'
-import type { DeckInput, InputError } from '@/calc/types'
-import { displayName, type Action } from '@/state/deckReducer'
-import { FieldErrors, NumberInput } from '@/ui/fields'
+import { displayName } from '@/state/deckReducer'
+import { FieldErrors, NumberInput, type SectionProps } from '@/ui/fields'
 
-type Props = { state: DeckInput; errors: InputError[]; dispatch: React.Dispatch<Action> }
-
-export default function GroupList({ state, errors, dispatch }: Props) {
+export default function GroupList({ state, errors, dispatch }: SectionProps) {
   const { groups, deckSize } = state
   // デッキ枚数・各枚数・合計がすべて正しいときだけ、その他の枚数を出す
   const showOther = !errors.some(e => e.field === 'deckSize' || e.field === 'groups' || e.field.startsWith('group:'))

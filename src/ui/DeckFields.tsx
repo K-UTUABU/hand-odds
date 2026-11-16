@@ -1,10 +1,6 @@
-import type { DeckInput, InputError } from '@/calc/types'
-import type { Action } from '@/state/deckReducer'
-import { FieldErrors, NumberInput } from '@/ui/fields'
+import { FieldErrors, NumberInput, type SectionProps } from '@/ui/fields'
 
-type Props = { state: DeckInput; errors: InputError[]; dispatch: React.Dispatch<Action> }
-
-export default function DeckFields({ state, errors, dispatch }: Props) {
+export default function DeckFields({ state, errors, dispatch }: SectionProps) {
   return (
     <section className="flex flex-wrap items-center gap-x-4 gap-y-1">
       <span className="flex items-center gap-1">

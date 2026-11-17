@@ -13,7 +13,7 @@ function mulberry32(seed: number): () => number {
   }
 }
 
-/** 前提：validate(input) が空。毎回デッキを部分的に混ぜて handSize 枚引き、成立した割合を返す */
+/** 前提：validate(input) が空、かつ trials >= 1（0 だと NaN になる）。毎回デッキを部分的に混ぜて handSize 枚引き、成立した割合を返す */
 export function simulate(
   { deckSize, handSize, groups, patterns }: DeckInput,
   { trials, seed }: { trials: number; seed: number },

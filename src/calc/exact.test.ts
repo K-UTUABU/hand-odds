@@ -53,6 +53,13 @@ test('デッキを全部引くと、枚数どおりになる', () => {
   expect(exact(input).patterns).toEqual([1, 0])
 })
 
+test('グループの合計がデッキ枚数と同じで、全部引いても計算できる', () => {
+  const input = { deckSize: 10, handSize: 10, groups: [group('a', 4), group('b', 6)],
+    patterns: [pattern('p1', { a: { min: 4, max: 4 }, b: { min: 6, max: 6 } }),
+      pattern('p2', { a: { min: 0, max: 3 } })] }
+  expect(exact(input)).toEqual({ patterns: [1, 0], any: 1 })
+})
+
 test('グループにないキーの条件は無視される', () => {
   const input = { deckSize: 10, handSize: 5, groups: [group('a', 4)],
     patterns: [pattern('p', { gone: { min: 9, max: 9 } })] }

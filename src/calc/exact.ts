@@ -22,15 +22,24 @@ export function exact({ deckSize, handSize, groups, patterns }: DeckInput): Prob
   const sums = patterns.map(() => 0n)
   let anySum = 0n
   const counts: number[] = new Array(groups.length).fill(0)
+  // 条件を groups と同じ並びの数値配列にしておく（葉ごとの辞書引きとクロージャ生成を避ける）
+  const mins = patterns.map(p => groups.map(g => p.conditions[g.id]?.min ?? 0))
+  const maxs = patterns.map(p => groups.map(g => p.conditions[g.id]?.max ?? Infinity))
+  const satisfies = (j: number): boolean => {
+    for (let i = 0; i < counts.length; i++) {
+      if (counts[i] < mins[j][i] || counts[i] > maxs[j][i]) return false
+    }
+    return true
+  }
 
   const walk = (i: number, left: number, weight: bigint): void => {
     if (i === groups.length) {
       if (left > rest) return // その他の枚数 r = left は R 以下
       const w = weight * binom[rest][left]
       let hit = false
-      patterns.forEach((p, j) => {
-        if (matches(p, groups, counts)) { sums[j] += w; hit = true }
-      })
+      for (let j = 0; j < sums.length; j++) {
+        if (satisfies(j)) { sums[j] += w; hit = true }
+      }
       if (hit) anySum += w // any は内訳ごとに1回だけ足す
       return
     }

@@ -48,11 +48,11 @@ export default function ResultTable({ input, hasErrors, runSimulation = simulate
                 <tr key={key} className="border-b align-top">
                   <th scope="row" className="break-words py-1 pr-2 font-normal">{label}</th>
                   <td className="whitespace-nowrap px-2 py-1">{formatPercent(e)}</td>
-                  <td className="whitespace-nowrap py-1 pl-2">
+                  <td className="py-1 pl-2">
                     {s === undefined ? '—' : (
                       <>
-                        <span>{formatPercent(s)}</span>
-                        <span className="block text-xs">±{(margin(e, LIMITS.trials) * 100).toFixed(2)}</span>
+                        <span className="whitespace-nowrap">{formatPercent(s)}</span>
+                        <span className="block whitespace-nowrap text-xs">±{(margin(e, LIMITS.trials) * 100).toFixed(2)}</span>
                         {withinMargin(e, s, LIMITS.trials)
                           ? <span className="block text-xs">誤差の範囲内</span>
                           : <span role="alert" className="block text-xs text-red-700">厳密な計算と食い違っています</span>}

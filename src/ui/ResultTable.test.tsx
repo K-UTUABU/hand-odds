@@ -1,12 +1,14 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect, test, vi } from 'vitest'
+import { afterEach, expect, test, vi } from 'vitest'
 import type { DeckInput } from '@/calc/types'
 import ResultTable from '@/ui/ResultTable'
 
 const input: DeckInput = { deckSize: 10, handSize: 5,
   groups: [{ id: 'a', name: '初動', count: 4 }],
   patterns: [{ id: 'p', name: '', conditions: { a: { min: 0, max: 0 } } }] }   // 6/252 = 2.38%
+
+afterEach(() => vi.restoreAllMocks())
 
 test('厳密な計算を表示し、シミュレーションは未実行', () => {
   render(<ResultTable input={input} hasErrors={false} />)
@@ -59,7 +61,6 @@ test('2回押すと、種が毎回変わる', async () => {
   now.mockReturnValue(222)
   await userEvent.click(button)
   expect(run.mock.calls.map(c => c[1].seed)).toEqual([111, 222])
-  now.mockRestore()
 })
 test('編集して元の値に戻しても（等しい別オブジェクト）、古い結果は出ない', async () => {
   const run = vi.fn().mockReturnValue({ patterns: [0.0240], any: 0.0240 })

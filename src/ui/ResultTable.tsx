@@ -35,11 +35,12 @@ export default function ResultTable({ input, hasErrors, runSimulation = simulate
       ) : (
         <>
           <table className="mt-2 w-full text-left text-sm">
+            <caption className="sr-only">厳密な計算と、シミュレーション（10万回）の結果</caption>
             <thead>
               <tr className="border-b">
                 <th scope="col" className="py-1 pr-2 font-normal">パターン</th>
-                <th scope="col" className="px-2 py-1 font-normal">厳密な計算</th>
-                <th scope="col" className="py-1 pl-2 font-normal">シミュレーション（10万回）</th>
+                <th scope="col" className="whitespace-nowrap px-2 py-1 font-normal">厳密</th>
+                <th scope="col" className="whitespace-nowrap py-1 pl-2 font-normal">シミュレーション</th>
               </tr>
             </thead>
             <tbody>
@@ -51,13 +52,10 @@ export default function ResultTable({ input, hasErrors, runSimulation = simulate
                     {s === undefined ? '—' : (
                       <>
                         <span>{formatPercent(s)}</span>
-                        <span className="block text-xs">
-                          <span>±{(margin(e, LIMITS.trials) * 100).toFixed(2)}</span>
-                          {' '}
-                          {withinMargin(e, s, LIMITS.trials)
-                            ? <span>誤差の範囲内</span>
-                            : <span role="alert" className="text-red-700">厳密な計算と食い違っています</span>}
-                        </span>
+                        <span className="block text-xs">±{(margin(e, LIMITS.trials) * 100).toFixed(2)}</span>
+                        {withinMargin(e, s, LIMITS.trials)
+                          ? <span className="block text-xs">誤差の範囲内</span>
+                          : <span role="alert" className="block text-xs text-red-700">厳密な計算と食い違っています</span>}
                       </>
                     )}
                   </td>

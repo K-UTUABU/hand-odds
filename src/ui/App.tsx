@@ -4,6 +4,7 @@ import { deckReducer, initialState } from '@/state/deckReducer'
 import DeckFields from '@/ui/DeckFields'
 import GroupList from '@/ui/GroupList'
 import PatternList from '@/ui/PatternList'
+import ResultTable from '@/ui/ResultTable'
 
 export default function App() {
   const [state, dispatch] = useReducer(deckReducer, initialState)
@@ -15,6 +16,7 @@ export default function App() {
       <DeckFields {...props} />
       <GroupList {...props} />
       <PatternList {...props} />
+      <ResultTable input={state} hasErrors={errors.length > 0} />
     </main>
   )
 }

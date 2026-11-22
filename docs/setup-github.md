@@ -10,7 +10,7 @@
 
 ## ② 公開リポジトリ `hand-odds` の作成（済）
 
-- 公開リポジトリとして作成し、ローカルの `origin` に設定した（https://github.com/nno0p72gg0akabe-coder/hand-odds）。
+- 公開リポジトリとして作成し、ローカルの `origin` に設定した（https://github.com/K-UTUABU/hand-odds）。
 - 公開にする理由：無料プランでは、公開でないと main の保護（取り込みの制限）と GitHub Pages が使えない。
 
 ## ③ 最初の push のあとに、main を保護する（これから）

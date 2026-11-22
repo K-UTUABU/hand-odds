@@ -13,3 +13,6 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 .DS_Store
+
+# テストの実行で作られる出力
+.vitest/

@@ -2,6 +2,7 @@ import { LIMITS } from '@/calc/types'
 import type { Condition } from '@/calc/types'
 import { displayName } from '@/state/deckReducer'
 import { FieldErrors, NumberInput, type SectionProps } from '@/ui/fields'
+import { maxFromInput } from '@/ui/numberInput'
 
 /** 条件が未設定のグループは、条件なし（0 枚以上・上限なし）として表示する */
 const NO_CONDITION: Condition = { min: 0, max: null }
@@ -42,7 +43,7 @@ export default function PatternList({ state, errors, dispatch }: SectionProps) {
                     className="w-12" onChange={min => set({ ...c, min })} />
                   <span className="whitespace-nowrap text-sm">枚以上</span>
                   <NumberInput label={`${pName}：${gName}の最大`} value={c.max} errors={errors} field={field}
-                    className="w-12" onChange={v => set({ ...c, max: Number.isNaN(v) ? null : v })} />
+                    className="w-12" onChange={(v, bad) => set({ ...c, max: maxFromInput(v, bad) })} />
                   <span className="whitespace-nowrap text-sm">枚以下</span>
                   <FieldErrors errors={errors} field={field} />
                 </div>

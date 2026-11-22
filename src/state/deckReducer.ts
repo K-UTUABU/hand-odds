@@ -21,7 +21,7 @@ export const initialState: DeckInput = {
 
 /** 名前が空なら「グループ1」のような表示名を返す */
 export function displayName(item: { name: string }, index: number, kind: 'グループ' | 'パターン'): string {
-  return item.name === '' ? `${kind}${index + 1}` : item.name
+  return item.name.trim() === '' ? `${kind}${index + 1}` : item.name
 }
 
 /** 状態は検査前の入力をそのまま持つ。値の検査はしない（validate の仕事） */

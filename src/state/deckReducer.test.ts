@@ -33,6 +33,7 @@ test('最後のグループ・最後のパターンは削除されない', () =>
 })
 test('名前が空なら番号つきの名前', () => {
   expect(displayName({ name: '' }, 0, 'グループ')).toBe('グループ1')
+  expect(displayName({ name: '  ' }, 0, 'グループ')).toBe('グループ1')
   expect(displayName({ name: '初動' }, 0, 'グループ')).toBe('初動')
 })
 test('新しいグループ・パターンは空の名前、0枚、条件なし', () => {

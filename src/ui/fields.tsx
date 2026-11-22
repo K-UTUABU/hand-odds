@@ -20,7 +20,12 @@ export function NumberInput({ label, value, onChange, errors, field, className =
     <input
       type="number" inputMode="numeric" aria-label={label} aria-invalid={errors.some(e => e.field === field)}
       value={toText(value)}
-      onChange={e => onChange(parseNumberInput(e.target.value, e.target.validity.badInput), e.target.validity.badInput)}
+      // React の onChange は値が変わらないと呼ばれない（「-」や「1e」は値が '' のまま）。毎回届く onInput で読む
+      onInput={e => {
+        const { value, validity } = e.currentTarget
+        onChange(parseNumberInput(value, validity.badInput), validity.badInput)
+      }}
+      onChange={() => {}}
       className={`${className} rounded border border-gray-400 px-1 py-0.5 aria-invalid:border-red-600`}
     />
   )

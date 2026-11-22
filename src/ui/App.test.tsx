@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, test } from 'vitest'
 import App from '@/ui/App'
@@ -49,6 +49,24 @@ test('条件の最大を空のままにすると上限なし、入れると値�
   expect(max).toHaveValue(3)
   await userEvent.clear(max)
   expect(max).toHaveValue(null)
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+})
+test('最大を入力してから空にすると、誤りが消えて上限なしに戻る（input イベント）', () => {
+  render(<App />)
+  const max = screen.getByLabelText('パターン1：グループ1の最大')
+  fireEvent.input(max, { target: { value: '-1' } })
+  expect(screen.getByRole('alert')).toHaveTextContent('条件は 0 以上の整数で入力してください')
+  fireEvent.input(max, { target: { value: '' } })
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+})
+test('最大が途中の入力（badInput）なら、空に見えても上限なしにせず誤りにする', () => {
+  render(<App />)
+  const max = screen.getByLabelText('パターン1：グループ1の最大')
+  Object.defineProperty(max, 'validity', { value: { badInput: true }, configurable: true })
+  fireEvent.input(max, { target: { value: '' } })
+  expect(screen.getByRole('alert')).toHaveTextContent('条件は 0 以上の整数で入力してください')
+  Object.defineProperty(max, 'validity', { value: { badInput: false }, configurable: true })
+  fireEvent.input(max, { target: { value: '' } })
   expect(screen.queryByRole('alert')).not.toBeInTheDocument()
 })
 test('最小が最大より大きいと、条件の行の下に誤りが出る', async () => {

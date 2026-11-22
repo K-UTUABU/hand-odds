@@ -3,7 +3,7 @@
 デッキをグループに分けて枚数を入れると、初手で条件を満たす確率が分かるツールです。
 厳密な計算（多変量の超幾何分布）とシミュレーションの両方で求め、並べて表示します。計算はすべてブラウザの中で行い、入力は外部へ送りません。
 
-**公開 URL：<https://nno0p72gg0akabe-coder.github.io/hand-odds/>**（スマートフォンでも使えます）
+**公開 URL：<https://K-UTUABU.github.io/hand-odds/>**（スマートフォンでも使えます）
 
 | 入力 | 結果 |
 |---|---|
@@ -61,7 +61,7 @@ npm run build   # 型チェック + ビルド
 決まりは [CLAUDE.md](CLAUDE.md)、設計は [設計書](docs/superpowers/specs/2026-11-16-hand-odds-design.md)（5 章がこの仕組み）、作業手順は [計画](docs/superpowers/plans/2026-11-16-hand-odds.md) にあります。
 
 - **検算表は依頼者のもの**：私が手計算した「入力と正解」の表（[docs/acceptance/kensan.md](docs/acceptance/kensan.md)）を、作り手はそのままテスト（`src/calc/kensan.test.ts`）にします。表もテストの期待値も、作り手は変えません。通らなければ実装を直すか、表の誤りの疑いを根拠つきで報告します
-- **課題 → プルリクエスト → 自動チェック → 依頼者の判定**：[課題](https://github.com/nno0p72gg0akabe-coder/hand-odds/issues?q=is%3Aissue) 1件につきプルリクエスト 1件（[取り込み済みの一覧](https://github.com/nno0p72gg0akabe-coder/hand-odds/pulls?q=is%3Apr+is%3Aclosed)）。型チェック・リント・テスト・ビルドの自動チェック（`check`）が通らないと取り込めず、取り込めるのは私だけ。main は保護しています
+- **課題 → プルリクエスト → 自動チェック → 依頼者の判定**：[課題](https://github.com/K-UTUABU/hand-odds/issues?q=is%3Aissue) 1件につきプルリクエスト 1件（[取り込み済みの一覧](https://github.com/K-UTUABU/hand-odds/pulls?q=is%3Apr+is%3Aclosed)）。型チェック・リント・テスト・ビルドの自動チェック（`check`）が通らないと取り込めず、取り込めるのは私だけ。main は保護しています
 - **プルリクエストの型**：[テンプレート](.github/pull_request_template.md)で「何をしたか／なぜ／どう確かめたか／自分で決めたこと／特に見てほしい点」を必ず書かせ、全部のコードを読まなくても判定できるようにしました
 - **判断の記録**：作り手が自分で決めた、後から変えにくいことを 1件 1ファイルで残しています
 

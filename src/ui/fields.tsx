@@ -1,5 +1,6 @@
 import type { DeckInput, InputError } from '@/calc/types'
 import type { Action } from '@/state/deckReducer'
+import { parseNumberInput } from '@/ui/numberInput'
 
 /** NaN（空欄）は空文字で表示する */
 const toText = (v: number | null) => (v === null || Number.isNaN(v) ? '' : v)
@@ -7,7 +8,7 @@ const toText = (v: number | null) => (v === null || Number.isNaN(v) ? '' : v)
 type NumberInputProps = {
   label: string
   value: number | null
-  onChange: (v: number) => void
+  onChange: (v: number, badInput: boolean) => void
   errors: InputError[]
   field: string
   className?: string
@@ -19,7 +20,7 @@ export function NumberInput({ label, value, onChange, errors, field, className =
     <input
       type="number" inputMode="numeric" aria-label={label} aria-invalid={errors.some(e => e.field === field)}
       value={toText(value)}
-      onChange={e => onChange(e.target.value === '' ? NaN : Number(e.target.value))}
+      onChange={e => onChange(parseNumberInput(e.target.value, e.target.validity.badInput), e.target.validity.badInput)}
       className={`${className} rounded border border-gray-400 px-1 py-0.5 aria-invalid:border-red-600`}
     />
   )

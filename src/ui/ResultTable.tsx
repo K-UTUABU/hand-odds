@@ -55,7 +55,7 @@ export default function ResultTable({ input, hasErrors, runSimulation = simulate
                         <span className="block whitespace-nowrap text-xs">±{(margin(e, LIMITS.trials) * 100).toFixed(2)}</span>
                         {withinMargin(e, s, LIMITS.trials)
                           ? <span className="block text-xs">誤差の範囲内</span>
-                          : <span role="alert" className="block text-xs text-red-700">厳密な計算と食い違っています</span>}
+                          : <span role="alert" className="block text-xs text-red-700">厳密な計算と食い違っています。まれに偶然でも出ます。もう一度実行して確かめてください。</span>}
                       </>
                     )}
                   </td>
@@ -63,6 +63,7 @@ export default function ResultTable({ input, hasErrors, runSimulation = simulate
               ))}
             </tbody>
           </table>
+          <p className="mt-1 text-xs text-gray-600">シミュレーションは10万回。±は誤差の目安（標準誤差の3倍、%）。</p>
           <button type="button" onClick={run} className="mt-2 rounded border px-2 py-1">シミュレーションを実行</button>
         </>
       )}
